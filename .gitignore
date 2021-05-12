@@ -1,4 +1,5 @@
 HELP.md
+test-endpoints/**
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
