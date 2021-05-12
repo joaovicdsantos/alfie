@@ -3,6 +3,7 @@ package com.alfie.alfieapi.service;
 import com.alfie.alfieapi.dto.SongDTO;
 import com.alfie.alfieapi.entity.Song;
 import com.alfie.alfieapi.exception.SongNotFound;
+import com.alfie.alfieapi.exception.TagNotFound;
 import com.alfie.alfieapi.mapper.SongMapper;
 import com.alfie.alfieapi.repository.SongRepository;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,11 @@ public class SongService {
     public SongDTO findById(String id) throws SongNotFound {
         SongDTO song = songMapper.toDTO(verifyIfExists(id));
         return song;
+    }
+
+    public List<SongDTO> findByTag(String tag) throws TagNotFound {
+        List<Song> songList = songRepository.findByTag(tag).orElseThrow(() -> new TagNotFound(tag));
+        return songList.stream().map(songMapper::toDTO).collect(Collectors.toList());
     }
 
     public void deleteById(String id) throws SongNotFound {

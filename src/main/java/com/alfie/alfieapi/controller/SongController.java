@@ -2,6 +2,7 @@ package com.alfie.alfieapi.controller;
 
 import com.alfie.alfieapi.dto.SongDTO;
 import com.alfie.alfieapi.exception.SongNotFound;
+import com.alfie.alfieapi.exception.TagNotFound;
 import com.alfie.alfieapi.model.Response;
 import com.alfie.alfieapi.service.SongService;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,13 @@ public class SongController {
     public ResponseEntity<Response<SongDTO>> findById(@PathVariable String id) throws SongNotFound {
         Response<SongDTO> response = new Response<>();
         response.setData(songService.findById(id));
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/tag/{tag}")
+    public ResponseEntity<Response<List<SongDTO>>> getByTag(@PathVariable String tag) throws TagNotFound {
+        Response<List<SongDTO>> response = new Response<>();
+        response.setData(songService.findByTag(tag));
         return ResponseEntity.ok(response);
     }
 
